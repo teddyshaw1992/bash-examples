@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo -e "\e[34m
-##################################################################
+####################################################################################################################################
 # PRINT METHODS
-##################################################################
+####################################################################################################################################
 \e[39m"
 # Basic print
 echo "Basic print with echo"
@@ -24,18 +24,42 @@ echo
 
 
 echo -e "\e[34m
-##################################################################
+####################################################################################################################################
 # PRIMITIVE/DATA TYPES
-##################################################################
+####################################################################################################################################
 \e[39m"
 
+echo "Primitives don't actually exist in bash. You can however, declare variables as specifc data types:"
 
+# Set var as an int
+declare -i var1
+var1="thing"
+echo $var1
+var1="3"
+echo $var1
+echo
+
+# Set var as an array
+declare -a array
+array=1
+echo $array
+array=("echo hello")
+array+=("thing")
+echo ${array[*]}
+echo ${array[0]}
+echo ${array[1]}
+echo
+
+# Constants
+readonly const_var1="hello"
+const_var1="world"
+echo
 
 
 echo -e "\e[34m
-##################################################################
+####################################################################################################################################
 # VARIABLES
-##################################################################
+####################################################################################################################################
 \e[39m"
 # Set Variable
 echo -e "Set variables using NAME_HERE=foo\n"
@@ -53,9 +77,9 @@ echo -e "Server name is ${var1}\n"
 
 
 echo -e "\e[34m
-##################################################################
+####################################################################################################################################
 # CONDITONAL STATEMENTS
-##################################################################
+####################################################################################################################################
 \e[39m"
 # If statement
 echo -e "Basic if statement"
@@ -106,9 +130,9 @@ case "${var1}" in
 esac
 
 echo -e "\e[34m
-##################################################################
+####################################################################################################################################
 # LOGICAL OPERATORS
-##################################################################
+####################################################################################################################################
 \e[39m"
 
 echo -e "Visit \e[36m https://ryanstutorials.net/bash-scripting-tutorial/bash-if-statements.php \e[39m for a list of operators\n"
@@ -149,9 +173,9 @@ else
 fi
 
 echo -e "\e[34m
-##################################################################
+####################################################################################################################################
 # FOR LOOPS
-##################################################################
+####################################################################################################################################
 \e[39m"
 
 # Different variations of defining lists for loops
@@ -203,14 +227,26 @@ done
 echo
 
 echo -e "\e[34m
-##################################################################
+####################################################################################################################################
 # WHILE LOOPS
-##################################################################
+####################################################################################################################################
 \e[39m"
 
-######################
+# Basic while loop
+var1=""
+while [ "${var1}" != "end" ]; do
+  printf "Type end to quit:"
+  read var1
+  echo "You typed ${var1}"
+done
+
+
+
+echo -e "\e[34m
+####################################################################################################################################
 # ARRAYS
-######################
+####################################################################################################################################
+\e[39m"
 
 # Intialise an array
 ARRAY=() # Empty array
@@ -218,38 +254,56 @@ ARRAY=(zero one two) # Starting with content
 
 # Print contents of an Array
 echo "Referencing all contents of an array:"
-echo ${ARRAY[*]} # All contents
+echo -e "${ARRAY[*]}\n" # All contents
 
 echo "Referencing the array variable name alone returns the first value of the array"
-echo ${ARRAY} #
-echo ${ARRAY[2]}
-ARRAY[3]=four
-echo ${ARRAY[*]}
-unset ARRAY[1]
-echo ${ARRAY[*]}
-unset ARRAY
-echo ${ARRAY[*]}
+echo -e "${ARRAY}" # Only the first element
+
+echo -e "Reference specific name value of array:"
+echo -e "${ARRAY[2]}\n" # Reference a set element, starting at 0
+
+# Modifying arrays
+echo -e "Adding elements to arrays:"
+ARRAY[3]=three # Override elements
+echo -e "${ARRAY[*]}\n"
+
+echo -e "Removing elements from arrays"
+unset ARRAY[1] # Remove element from array
+echo -e "${ARRAY[*]}\n"
+
+echo -e "Remove entire array"
+unset ARRAY # Remove element
+echo -e "${ARRAY[*]}\n"
+
+echo -e "Appending elements to an array"
 ARRAY+=('foo')
 ARRAY+=('bar')
 echo ${ARRAY[*]}
-echo ${#ARRAY[@]}
 
-######################
-# PRINTING COLOURS
-######################
-
-echo "See this website for colour options https://misc.flogisoft.com/bash/tip_colors_and_formatting"
-
-echo -e "Default \e[92mLight green"
-echo -e "Default \e[91mLight red"
-echo -e "Default \e[39mDefault"
-
-######################
-# STANDARD OUTPUT OPTIONS
-######################
+# Getting the length of an array
+echo -e "Length of array is: ${#ARRAY[@]}\n"
 
 
-### OTHER STUFF
+
+echo -e "\e[34m
+####################################################################################################################################
+# PRINT WITH COLOURS
+####################################################################################################################################
+\e[39m"
+
+echo -e "See this website for colour options \e[36m https://misc.flogisoft.com/bash/tip_colors_and_formatting \e[39m"
+
+echo -e "Default \e[92mLight green\e[39m"
+echo -e "Default \e[91mLight red\e[39m"
+echo -e "Default \e[39mDefault\e[39m"
+
+
+
+echo -e "\e[34m
+####################################################################################################################################
+# OTHER STUFF
+####################################################################################################################################
+\e[39m"
 
 # Convert bash script from Windows format to Linux
 echo "do2unix SCRIPT_NAME_HERE"
